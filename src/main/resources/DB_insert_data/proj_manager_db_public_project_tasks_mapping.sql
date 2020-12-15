@@ -1,0 +1,1 @@
+INSERT INTO public.project_tasks_mapping ("project_tasks_projectID", "project_tasks_taskID") VALUES (3, 1);

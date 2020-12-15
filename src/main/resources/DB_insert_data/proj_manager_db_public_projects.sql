@@ -1,0 +1,1 @@
+INSERT INTO public.projects (proj_id, proj_name, proj_customer, proj_director, proj_descr, proj_create_date, proj_update_date, proj_termonation_plan_date, proj_termonation_fact_date, project_closed) VALUES (3, 'project1', 1, 2, null, '2020-12-10 19:36:01.000000', '2020-12-10 19:36:03.000000', '2020-12-10 19:36:04.000000', '2020-12-10 19:36:07.000000', false);

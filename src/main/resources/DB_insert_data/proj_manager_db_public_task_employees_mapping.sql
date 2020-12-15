@@ -1,0 +1,9 @@
+INSERT INTO public.task_employees_mapping ("task_employees_taskID", "task_employees_executorID") VALUES (1, 2);
+INSERT INTO public.task_employees_mapping ("task_employees_taskID", "task_employees_executorID") VALUES (3, 3);
+INSERT INTO public.task_employees_mapping ("task_employees_taskID", "task_employees_executorID") VALUES (5, 3);
+INSERT INTO public.task_employees_mapping ("task_employees_taskID", "task_employees_executorID") VALUES (6, 4);
+INSERT INTO public.task_employees_mapping ("task_employees_taskID", "task_employees_executorID") VALUES (8, 4);
+INSERT INTO public.task_employees_mapping ("task_employees_taskID", "task_employees_executorID") VALUES (9, 3);
+INSERT INTO public.task_employees_mapping ("task_employees_taskID", "task_employees_executorID") VALUES (10, 3);
+INSERT INTO public.task_employees_mapping ("task_employees_taskID", "task_employees_executorID") VALUES (12, 2);
+INSERT INTO public.task_employees_mapping ("task_employees_taskID", "task_employees_executorID") VALUES (1, 9);

@@ -1,0 +1,4 @@
+INSERT INTO public.positions (position_id, position_title, position_create_date, position_update_date) VALUES (1, 'Superuser', '2020-12-06 11:13:39.817095', '2020-12-06 11:13:39.817095');
+INSERT INTO public.positions (position_id, position_title, position_create_date, position_update_date) VALUES (2, 'manager', '2020-12-10 16:28:41.018404', '2020-12-10 16:28:41.018404');
+INSERT INTO public.positions (position_id, position_title, position_create_date, position_update_date) VALUES (3, 'engineer', '2020-12-10 16:28:41.018404', '2020-12-10 16:28:41.018404');
+INSERT INTO public.positions (position_id, position_title, position_create_date, position_update_date) VALUES (4, 'architector', '2020-12-10 16:28:41.018404', '2020-12-10 16:28:41.018404');
