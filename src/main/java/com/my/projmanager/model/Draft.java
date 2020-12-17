@@ -7,6 +7,8 @@ import com.my.projmanager.model.impl.Task;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -26,8 +28,11 @@ public abstract class Draft {
 
     private String deskr;
 
+    @Column(updatable = false)
+    @CreationTimestamp
     private Timestamp created;
 
+    @UpdateTimestamp
     private Timestamp updated;
 
     @Column(nullable = false)
@@ -35,7 +40,7 @@ public abstract class Draft {
 
     private Timestamp temporationFact;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "default 'false'")
     private Boolean closed;
 
     @ManyToMany(fetch = FetchType.LAZY)

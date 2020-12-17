@@ -1,6 +1,9 @@
 package com.my.projmanager.model.impl;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -21,9 +24,13 @@ public class Position {
     @Column(name = "position_title", nullable = false)
     private String title;
 
-    @Column(name = "position_create_date")
+    @Column(name = "position_create_date", updatable = false)
+    @CreationTimestamp
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Timestamp created;
 
     @Column(name = "position_update_date")
+    @UpdateTimestamp
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Timestamp updated;
 }

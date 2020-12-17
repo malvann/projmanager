@@ -21,7 +21,6 @@ public class Role {
 
     @NotNull
     @Column(name = "role_name", unique = true, nullable = false)
+    @Enumerated(EnumType.STRING)
     private SystemRole name;
-
-
 }

@@ -3,6 +3,8 @@ package com.my.projmanager.model;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -28,11 +30,16 @@ public abstract class PersonInf {
     @Column(nullable = false, unique = true)
     private String phone;
 
+    @Column (columnDefinition = "varchar(100)")
     private String skype;
 
+    @Column (columnDefinition = "varchar(100)")
     private String telegramm;
 
+    @Column(updatable = false)
+    @CreationTimestamp
     private Timestamp created;
 
+    @UpdateTimestamp
     private Timestamp updated;
 }

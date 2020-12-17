@@ -2,6 +2,8 @@ package com.my.projmanager.model.impl;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -27,9 +29,11 @@ public class Message {
     @Column(name = "message_content", nullable = false)
     private String content;
 
-    @Column(name = "message_create_date")
+    @Column(name = "message_create_date", updatable = false)
+    @CreationTimestamp
     private Timestamp created;
 
     @Column(name = "message_update_date")
+    @UpdateTimestamp
     private Timestamp updated;
 }

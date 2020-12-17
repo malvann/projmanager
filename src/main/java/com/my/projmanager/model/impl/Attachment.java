@@ -1,6 +1,8 @@
 package com.my.projmanager.model.impl;
 
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.net.URL;
@@ -22,9 +24,11 @@ public class Attachment {
     @Column(name = "file_url", nullable = false, unique = true)
     private URL url;
 
-    @Column(name = "file_create_date")
+    @Column(name = "file_create_date", updatable = false)
+    @CreationTimestamp
     private Timestamp created;
 
     @Column(name = "file_update_date")
+    @UpdateTimestamp
     private Timestamp updated;
 }
