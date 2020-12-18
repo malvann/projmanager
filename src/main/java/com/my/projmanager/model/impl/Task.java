@@ -25,34 +25,33 @@ import java.util.Set;
         name = "files",
         joinTable = @JoinTable(
                 name = "att_task_mapping",
-                joinColumns = @JoinColumn(name = "att_task_taskID"),
-                inverseJoinColumns = @JoinColumn(name = "att_task_attID")
+                joinColumns = @JoinColumn(name = "att_task_task_id"),
+                inverseJoinColumns = @JoinColumn(name = "att_task_att_id")
         )
 )
 @AssociationOverride(
         name = "messages",
         joinTable = @JoinTable(
                 name = "message_task_mapping",
-                joinColumns = @JoinColumn(name = "mess_task_taskID"),
-                inverseJoinColumns = @JoinColumn(name = "mess_task_messID")
+                joinColumns = @JoinColumn(name = "mess_task_task_id"),
+                inverseJoinColumns = @JoinColumn(name = "mess_task_mess_id")
         )
 )
 @AssociationOverride(name = "tasks",
         joinTable = @JoinTable(
                 name = "tasks_mapping",
-                joinColumns = @JoinColumn(name = "tasks_mapping_mainTaskID"),
-                inverseJoinColumns = @JoinColumn(name = "tasks_mapping_taskID")
+                joinColumns = @JoinColumn(name = "tasks_mapping_maintask_id"),
+                inverseJoinColumns = @JoinColumn(name = "tasks_mapping_task_id")
         )
 )
 @EqualsAndHashCode(callSuper = true)
 public class Task extends Draft {
-
   @ManyToMany
   @JsonManagedReference
   @JoinTable(
           name = "task_employees_mapping",
-          joinColumns = @JoinColumn(name = "task_employees_taskID"),
-          inverseJoinColumns = @JoinColumn(name = "task_employees_executorID")
+          joinColumns = @JoinColumn(name = "task_employees_task_id"),
+          inverseJoinColumns = @JoinColumn(name = "task_employees_executor_id")
   )
   Set<Employee> executors;
 }

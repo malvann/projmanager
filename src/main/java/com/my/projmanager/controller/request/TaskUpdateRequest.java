@@ -5,6 +5,6 @@ import lombok.EqualsAndHashCode;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class ProjectUpdareRequest extends ProjectCreateRequest{
+public class TaskUpdateRequest extends TaskCreateRequest{
     private Long id;
 }

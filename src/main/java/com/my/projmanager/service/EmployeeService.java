@@ -16,9 +16,4 @@ public class EmployeeService {
         employee.setPassword(passwordEncoder.encode(employee.getPassword()));
         return employeeRepository.save(employee);
     }
-
-    public Employee update(Employee employee){
-    employee.setPassword(passwordEncoder.encode(employee.getPassword()));
-    return employeeRepository.save(employee);
-    }
 }

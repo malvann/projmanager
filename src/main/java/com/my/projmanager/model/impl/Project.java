@@ -24,34 +24,34 @@ import javax.persistence.*;
         name = "files",
         joinTable = @JoinTable(
                 name = "message_proj_mapping",
-                joinColumns = @JoinColumn(name = "mess_proj_projID"),
-                inverseJoinColumns = @JoinColumn(name = "mess_proj_messageID")
+                joinColumns = @JoinColumn(name = "mess_proj_proj_id"),
+                inverseJoinColumns = @JoinColumn(name = "mess_proj_message_id")
         )
 )
 @AssociationOverride(
         name = "messages",
         joinTable = @JoinTable(
                 name = "message_proj_mapping",
-                joinColumns = @JoinColumn(name = "mess_proj_projID"),
-                inverseJoinColumns = @JoinColumn(name = "mess_proj_messageID")
+                joinColumns = @JoinColumn(name = "mess_proj_proj_id"),
+                inverseJoinColumns = @JoinColumn(name = "mess_proj_message_id")
         )
 )
 @AssociationOverride(name = "tasks",
         joinTable = @JoinTable(
                 name = "project_tasks_mapping",
-                joinColumns = @JoinColumn(name = "project_tasks_projectID"),
-                inverseJoinColumns = @JoinColumn(name = "project_tasks_taskID")
+                joinColumns = @JoinColumn(name = "project_tasks_project_id"),
+                inverseJoinColumns = @JoinColumn(name = "project_tasks_task_id")
         )
 )
 @EqualsAndHashCode(callSuper = true)
 public class Project extends Draft {
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "proj_customer", nullable = false)
     @JsonManagedReference
     private Customer customer;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "proj_director", referencedColumnName = "empl_id")
     @JsonManagedReference
     private Employee director;

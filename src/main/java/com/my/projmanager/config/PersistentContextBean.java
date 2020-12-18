@@ -26,6 +26,9 @@ public class PersistentContextBean {
     private Properties getAdditionalProperties() {
         Properties properties = new Properties();
         properties.put("hibernate.show_sql", "true");
+        properties.put("hibernate.connection.characterEncoding", "utf8");
+        properties.put("hibernate.connection.CharSet", "utf8");
+        properties.put("hibernate.connection.useUnicode", "true");
         properties.put("current_session_context_class", "org.springframework.orm.hibernate5.SpringSessionContext");
         return properties;
     }

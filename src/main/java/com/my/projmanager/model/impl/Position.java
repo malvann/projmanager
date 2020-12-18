@@ -18,7 +18,7 @@ import java.sql.Timestamp;
 public class Position {
     @Id
     @Column(name = "position_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "position_title", nullable = false)

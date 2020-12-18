@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface MassageRepository extends JpaRepository<Message, Long> {
+public interface MessageRepository extends JpaRepository<Message, Long> {
 
     @Query(value = "select t.messages from Task t where t.id = :taskID")
     List<Message> findAllByTaskId(Long taskID);

@@ -37,6 +37,6 @@ public class Employee extends PersonInf {
     @JsonManagedReference
     private Role role;
 
-    @Column(name = "empl_fired", columnDefinition = "default 'false'")
-    private Boolean fired;
+    @Column(name = "empl_fired")
+    private Boolean fired = false;
 }

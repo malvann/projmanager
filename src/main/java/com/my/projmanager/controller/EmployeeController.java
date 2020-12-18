@@ -26,31 +26,24 @@ public class EmployeeController {
     }
 
     @GetMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public Employee findEmployeeById(@PathVariable Long id){
-        return repository.findById(id).get();
+    public ResponseEntity<Employee> findEmployeeById(@PathVariable Long id){
+        return ResponseEntity.ok(repository.findById(id).get());
     }
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public Employee createEmployee(@RequestBody EmployeeCreateRequest request){
-        Employee employee = new Employee();
-        employee.setName(request.getName());
-        employee.setLastname(request.getLastname());
-        employee.setPassword(request.getPassword());
-        employee.setMail(request.getMail());
-        employee.setPosition(request.getPosition());
-        employee.setPhone(request.getPhone());
-        employee.setSkype(request.getSkype());
-        employee.setTelegramm(request.getTelegramm());
-        employee.setRole(request.getRole());
-        return service.save(employee);
+    public ResponseEntity<Employee> createEmployee(@RequestBody EmployeeCreateRequest request){
+        Employee employee = fillEmployeeByRequest(new Employee(), request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.save(employee));
     }
 
     @PutMapping
-    @ResponseStatus(HttpStatus.OK)
-    public Employee updateEmployee(@RequestBody EmployeeUpdateRequest request){
-        Employee employee = repository.findById(request.getId()).get();
+    public ResponseEntity<Employee> updateEmployee(@RequestBody EmployeeUpdateRequest request){
+        Employee employee = fillEmployeeByRequest(repository.findById(request.getId()).get(), request);
+        employee.setFired(request.getFired());
+        return ResponseEntity.ok(service.save(employee));
+    }
+
+    private static Employee fillEmployeeByRequest(Employee employee, EmployeeCreateRequest request){
         employee.setName(request.getName());
         employee.setLastname(request.getLastname());
         employee.setPassword(request.getPassword());
@@ -60,53 +53,46 @@ public class EmployeeController {
         employee.setSkype(request.getSkype());
         employee.setTelegramm(request.getTelegramm());
         employee.setRole(request.getRole());
-        employee.setFired(request.getFired());
-        return service.save(employee);
+        return employee;
     }
 
     @GetMapping("/delete/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public Long deleteUser(@PathVariable Long id) {
+    public ResponseEntity<Long> deleteEmployee(@PathVariable Long id) {
         Employee employee = repository.findById(id).get();
         repository.delete(employee);
-        return id;
+        return ResponseEntity.ok().body(id);
     }
 
     @GetMapping("/search/{name},{lastname}")
-    @ResponseStatus(HttpStatus.OK)
-    public List<Employee> findByNameAndLastname(
+    public ResponseEntity<List<Employee>> findByNameAndLastname(
             @PathVariable String name,
             @PathVariable String lastname){
-        return repository.findByNameAndLastname(name, lastname);
+        return ResponseEntity.ok().body(repository.findByNameAndLastname(name, lastname));
     }
 
     @GetMapping("search/{position}")
-    @ResponseStatus(HttpStatus.OK)
-    public List<Employee> findByPosition(@PathVariable String position){
-        return repository.findByPosition_Title(position);
+    public ResponseEntity<List<Employee>> findByPosition(@PathVariable String position){
+        return ResponseEntity.ok(repository.findByPosition_Title(position));
     }
 
     @GetMapping("search/isFired={isFired}")
-    @ResponseStatus(HttpStatus.OK)
-    public List<Employee> findByFired(@PathVariable Boolean isFired){
-        return repository.findByFired(isFired);
+    public ResponseEntity<List<Employee>> findByFired(@PathVariable Boolean isFired){
+        return ResponseEntity.ok().body(repository.findByFired(isFired));
     }
 
     @GetMapping("search/projectId={projectId}/employeeIsFired={employeeIsFired}/taskIsClosed={taskIsClosed}")
-    @ResponseStatus(HttpStatus.OK)
-    public List<Employee> getExecutorsAndSubExecutorsByProjectId(
+    public ResponseEntity<List<Employee>> getExecutorsAndSubExecutorsByProjectId(
             @PathVariable Long projectId,
             @PathVariable Boolean employeeIsFired,
             @PathVariable Boolean taskIsClosed){
-        return repository.getExecutorsAndSubExecutorsByProjectId(projectId, employeeIsFired, taskIsClosed);
+        return ResponseEntity.ok().body(repository.getExecutorsAndSubExecutorsByProjectId(projectId, employeeIsFired, taskIsClosed));
     }
 
     @GetMapping("search/taskId={taskId}/employeeIsFired={employeeIsFired}/taskIsClosed={taskIsClosed}")
-    @ResponseStatus(HttpStatus.OK)
-    public List<Employee> getExecutorsAndSubExecutorsByTaskId(
+    public ResponseEntity<List<Employee>> getExecutorsAndSubExecutorsByTaskId(
             @PathVariable Long taskId,
             @PathVariable Boolean employeeIsFired,
             @PathVariable Boolean taskIsClosed){
-        return repository.getExecutorsAndSubExecutorsByTaskId(taskId, employeeIsFired, taskIsClosed);
+        return ResponseEntity.ok().body(repository.getExecutorsAndSubExecutorsByTaskId(taskId, employeeIsFired, taskIsClosed));
     }
 }
