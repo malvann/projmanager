@@ -12,6 +12,7 @@ import java.sql.Timestamp;
 @Table(name = "positions")
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Getter
 @Setter
 @EqualsAndHashCode(doNotUseGetters = true, of = "title")

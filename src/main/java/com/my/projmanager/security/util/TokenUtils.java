@@ -1,5 +1,6 @@
 package com.my.projmanager.security.util;
 
+import com.my.projmanager.controller.request.EmployeeInviteRequest;
 import com.my.projmanager.security.config.JwtTokenConfig;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -20,7 +21,7 @@ import static java.util.Calendar.MILLISECOND;
 public class TokenUtils {
     private static final String CREATE_VALUE = "created";
     private static final String ROLE = "role";
-    private static JwtTokenConfig JWT_TOKEN_CONFIG;
+    private final JwtTokenConfig jwtTokenConfig;
 
     public String getUsernameFromToken(String token) {
         return getClaimsFromToken(token).getSubject();
@@ -37,7 +38,7 @@ public class TokenUtils {
     private Claims getClaimsFromToken(String token) {
         return Jwts
                 .parser()
-                .setSigningKey(JWT_TOKEN_CONFIG.getSecret())
+                .setSigningKey(jwtTokenConfig.getSecret())
                 .parseClaimsJws(token)
                 .getBody();
     }
@@ -48,7 +49,7 @@ public class TokenUtils {
 
     private Date generateExpirationDate() {
         Calendar calendar = Calendar.getInstance();
-        calendar.add(MILLISECOND, JWT_TOKEN_CONFIG.getExpiration().intValue());
+        calendar.add(MILLISECOND, jwtTokenConfig.getExpiration().intValue());
         return calendar.getTime();
     }
 
@@ -66,7 +67,7 @@ public class TokenUtils {
                 .builder()
                 .setClaims(claims)
                 .setExpiration(generateExpirationDate())
-                .signWith(SignatureAlgorithm.HS512, JWT_TOKEN_CONFIG.getSecret())
+                .signWith(SignatureAlgorithm.HS512, jwtTokenConfig.getSecret())
                 .compact();
     }
 
@@ -75,6 +76,15 @@ public class TokenUtils {
         claims.put(SUBJECT, userDetails.getUsername());
         claims.put(CREATE_VALUE, generateCurrentDate());
         claims.put(ROLE, getEncryptedRoles(userDetails));
+        return generateToken(claims);
+    }
+
+    public String generateInviteToken(EmployeeInviteRequest request){
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("mail", request.getMail());
+        claims.put("position", request.getPosition());
+        claims.put("role", request.getRole());
+        claims.put(CREATE_VALUE, generateCurrentDate());
         return generateToken(claims);
     }
 
@@ -109,4 +119,6 @@ public class TokenUtils {
         final String username = getUsernameFromToken(token);
         return username.equals(userDetails.getUsername());
     }
+
+
 }

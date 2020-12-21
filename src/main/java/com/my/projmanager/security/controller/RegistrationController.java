@@ -1,52 +1,53 @@
-//package com.my.projmanager.security.controller;
-//
-//import com.my.projmanager.model.impl.Employee;
-//import com.noirix.controller.request.UserCreateRequest;
-//import com.noirix.domain.User;
-//import com.noirix.service.UserService;
-//import io.swagger.annotations.ApiOperation;
-//import lombok.RequiredArgsConstructor;
-//import org.springframework.http.HttpStatus;
-//import org.springframework.http.ResponseEntity;
-//import org.springframework.security.crypto.password.PasswordEncoder;
-//import org.springframework.web.bind.annotation.PostMapping;
-//import org.springframework.web.bind.annotation.RequestBody;
-//import org.springframework.web.bind.annotation.RequestMapping;
-//import org.springframework.web.bind.annotation.RestController;
-//
-//import java.sql.Timestamp;
-//import java.util.HashMap;
-//import java.util.Map;
-//
-//@RestController
-//@RequestMapping("/registration")
-//@RequiredArgsConstructor
-//public class RegistrationController {
-//
-//    private final EmployeeService userService;
-//    private final PasswordEncoder passwordEncoder;
-//
-//    @ApiOperation(value = "Endpoint for registration")
-//    @PostMapping
-//    public ResponseEntity<Map<String, Object>> registration(@RequestBody EmployeeCreateRequest userCreateRequest) {
-//        //converters
-//        Employee user = new Employee();
-//        user.setGender(userCreateRequest.getGender());
-//        user.setName(userCreateRequest.getName());
-//        user.setSurname(userCreateRequest.getSurname());
-//        user.setBirthDate(userCreateRequest.getBirthDate());
-//        user.setCreated(new Timestamp(System.currentTimeMillis()));
-//        user.setChanged(new Timestamp(System.currentTimeMillis()));
-//        user.setWeight(userCreateRequest.getWeight());
-//        user.setLogin(userCreateRequest.getLogin());
-//        user.setPassword(passwordEncoder.encode(userCreateRequest.getPassword()));
-//        Employee savedUser = userService.save(user);
-//
-//        Map<String, Object> result = new HashMap<>();
-//
-//        result.put("id", savedUser.getId());
-//        result.put("login", savedUser.getMail());
-//
-//        return new ResponseEntity<>(result, HttpStatus.CREATED);
-//    }
-//}
+package com.my.projmanager.security.controller;
+
+import com.my.projmanager.controller.EmployeeController;
+import com.my.projmanager.controller.request.EmployeeCreateRequest;
+import com.my.projmanager.controller.request.EmployeeInviteRequest;
+import com.my.projmanager.exceptions.EntityNotFoundException;
+import com.my.projmanager.mailing.MailSenderService;
+import com.my.projmanager.model.impl.*;
+import com.my.projmanager.repository.InvitationRepository;
+import com.my.projmanager.security.util.TokenUtils;
+import com.my.projmanager.service.EmployeeService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+
+import javax.mail.MessagingException;
+
+@RestController
+@RequestMapping("/registration")
+@RequiredArgsConstructor
+public class RegistrationController {
+    private final EmployeeService employeeService;
+    private final MailSenderService mailSenderService;
+    private final InvitationRepository invitationRepository;
+    private final TokenUtils tokenUtils;
+
+    //from SUPER_USER
+    //send mail for user
+    @PostMapping("/invitation")
+    @ResponseStatus(HttpStatus.OK)
+    public void registration(@RequestBody EmployeeInviteRequest request) throws MessagingException {
+        Invitation inviteToken = new Invitation();
+        inviteToken.setToken(tokenUtils.generateInviteToken(request));
+        invitationRepository.save(inviteToken);
+
+        String content = "http://localhost:8080/registration/confirm?token="
+                +inviteToken.getToken();
+        mailSenderService.send(request.getMail(), "invitation", content);
+    }
+
+    //from user mail
+    @PostMapping("/confirm")
+    public void confirmRegistration(@RequestParam("token") String inviteToken, @RequestBody EmployeeCreateRequest request) {
+
+        Invitation invitation = invitationRepository.findById(inviteToken).get();
+        if (!invitation.getToken().equals(inviteToken)) {
+            throw new EntityNotFoundException("Not found in DB");
+        }
+
+        invitationRepository.delete(invitation);
+        employeeService.save(EmployeeController.fillEmployeeByRequest(new Employee(), request));
+    }
+}

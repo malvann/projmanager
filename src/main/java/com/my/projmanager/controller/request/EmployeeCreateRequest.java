@@ -5,7 +5,7 @@ import lombok.EqualsAndHashCode;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class EmployeeCreateRequest extends EmployeeInviteCreateRequest {
+public class EmployeeCreateRequest extends EmployeeInviteRequest {
     private String password;
     private String name;
     private String lastname;

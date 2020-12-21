@@ -4,8 +4,6 @@ import com.my.projmanager.security.model.AuthRequest;
 import com.my.projmanager.security.model.AuthResponse;
 import com.my.projmanager.security.util.TokenUtils;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;

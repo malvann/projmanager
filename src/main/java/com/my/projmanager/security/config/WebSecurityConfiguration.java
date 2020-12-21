@@ -15,6 +15,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @RequiredArgsConstructor
 @Configuration
@@ -30,6 +31,13 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .userDetailsService(userProvider)
                 .passwordEncoder(passwordEncoder);
     }
+
+//        @Bean
+//    public AuthenticationTokenFilter authenticationTokenFilterBean(AuthenticationManager authenticationManager) throws Exception {
+//        AuthenticationTokenFilter authenticationTokenFilter = new AuthenticationTokenFilter(tokenUtils, userDetailsService);
+//        authenticationTokenFilter.setAuthenticationManager(authenticationManager);
+//        return authenticationTokenFilter;
+//    }
 
     @Bean
     @Override
@@ -47,13 +55,14 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
+//                .addFilterBefore(authenticationTokenFilterBean(authenticationManagerBean()), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
                 /*For swagger access only*/
                 .antMatchers("/v2/api-docs", "/configuration/ui/**", "/swagger-resources/**", "/configuration/security/**", "/swagger-ui.html", "/webjars/**").permitAll()
                 .antMatchers("/actuator/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/swagger-ui.html#").permitAll()
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                .antMatchers("/guest/**").permitAll()
+//                .antMatchers("/guest/**").permitAll()
                 .antMatchers("/registration/**").permitAll()
                 .antMatchers("/authentication/**").permitAll()
                 .antMatchers("/app/employees/**").permitAll()
@@ -63,14 +72,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/app/position/**").permitAll()
                 .antMatchers("/app/projects/**").permitAll()
                 .antMatchers("/app/tasks/**").permitAll()
-                .antMatchers("/roles/**").permitAll()
 //                .antMatchers("/admin/**").hasAnyRole("SUPERUSER", "ADMIN")
-//                .antMatchers("/user/**").hasRole("USER")
                 .anyRequest().authenticated();
-
-        // Custom JWT based authentication
-//        httpSecurity
-//                .addFilterBefore(authenticationTokenFilterBean(authenticationManagerBean()), UsernamePasswordAuthenticationFilter.class);
     }
 
     @Override

@@ -5,7 +5,7 @@ import com.my.projmanager.model.impl.Role;
 import lombok.Data;
 
 @Data
-public class EmployeeInviteCreateRequest {
+public class EmployeeInviteRequest {
     private String mail;
     private Position position;
     private Role role;

@@ -43,7 +43,7 @@ public class EmployeeController {
         return ResponseEntity.ok(service.save(employee));
     }
 
-    private static Employee fillEmployeeByRequest(Employee employee, EmployeeCreateRequest request){
+    public static Employee fillEmployeeByRequest(Employee employee, EmployeeCreateRequest request){
         employee.setName(request.getName());
         employee.setLastname(request.getLastname());
         employee.setPassword(request.getPassword());
