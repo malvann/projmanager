@@ -15,8 +15,8 @@ spring:
       starttls.enable: true
     host: smtp.gmail.com
     port: 587
-    username: mafordif@gmail.com
-    password: 5Gtdnj7dbG
+    username: 1111@gmail.com
+    password: 1111
 ---
 
 jwtconfig:
