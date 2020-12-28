@@ -1,0 +1,34 @@
+spring:
+  datasource:
+    username: postgres
+    password: 1111
+    url: "jdbc:postgresql://localhost:5432/proj_manager_db?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 10
+  mail:
+    protocol: smtp
+    properties.mail.smtp:
+      auth: true
+      starttls.enable: true
+    host: smtp.gmail.com
+    port: 587
+    username: mafordif@gmail.com
+    password: 66dfgjnJKJDFks7fdbgfb
+    debug: true
+  flyway:
+    enabled: false
+    ignore-missing-migrations: true
+    locations: classpath:/migration
+    baseline-on-migrate: true
+    baseline-description: Flyway Script
+    url: ${spring.datasource.url}
+    user: ${spring.datasource.username}
+    password: ${spring.datasource.password}
+---
+
+jwtconfig:
+  secret: mySecret
+  expiration: 60000000
+
+---

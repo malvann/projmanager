@@ -1,1 +1,0 @@
-INSERT INTO public.customers (custom_id, custom_name, custom_address, custom_mail, custom_phone, custom_skype, custom_telegramm, custom_create_date, custom_update_date, customer_lastname) VALUES (1, 'customer1', 'Minsk, Lenina 2', 'customer@gmail.com', '+4444', null, null, '2020-12-10 16:34:15.740652', '2020-12-10 19:33:47.000000', 'customer1 Lastname');
