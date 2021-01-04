@@ -1,13 +1,12 @@
 package com.my.projmanager.repository;
 
 import com.my.projmanager.model.impl.Project;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.sql.Timestamp;
 import java.util.List;
 
-public interface ProjectRepository extends JpaRepository<Project, Long> {
+public interface ProjectRepository extends CRUJpaRepository<Project, Long> {
 
     List<Project> findByCreatedBetweenAndClosed(Timestamp after, Timestamp before, Boolean closed);
 
