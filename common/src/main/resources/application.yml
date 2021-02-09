@@ -14,7 +14,7 @@ spring:
     host: smtp.gmail.com
     port: 587
     username: mafordif@gmail.com
-    password: 66dfgjnJKJDFks7fdbgfb
+    password: password
     debug: true
   flyway:
     enabled: false
