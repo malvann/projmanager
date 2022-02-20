@@ -31,17 +31,16 @@ public class AttachmentController {
     }
 
     @PostMapping
-    public ResponseEntity<Attachment> createAttachment(@RequestBody AttachmentCreateRequest request){
-        if (repository.existsAttachmentByUrl(request.getUrl()))
-            throw new DataFormatException("Entity already exist.");
+    public ResponseEntity<Attachment> createAttachment(@RequestBody AttachmentCreateRequest request) {
+        if (repository.existsAttachmentByUrl(request.getUrl())) throw new DataFormatException("Entity already exist.");
 
         Attachment attachment = new Attachment();
         attachment.setUrl(request.getUrl());
-      return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(attachment));
+        return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(attachment));
     }
 
     @PutMapping
-    public ResponseEntity<Attachment> updateAttachment(@RequestBody AttachmentUpdateRequest request){
+    public ResponseEntity<Attachment> updateAttachment(@RequestBody AttachmentUpdateRequest request) {
         Attachment attachment = repository.findById(request.getId())
                 .orElseThrow(() -> new DataFormatException("No such element"));
 
@@ -58,12 +57,12 @@ public class AttachmentController {
     }
 
     @GetMapping("/search/projectId={projectId}")
-    public ResponseEntity<List<Attachment>> getAllAttachmentsByProjectId(@PathVariable Long projectId){
+    public ResponseEntity<List<Attachment>> getAllAttachmentsByProjectId(@PathVariable Long projectId) {
         return ResponseEntity.ok(repository.getAllAttachmentsByProjectId(projectId));
     }
 
     @GetMapping("/search/taskId={taskId}")
-    public ResponseEntity<List<Attachment>> getAllAttachmentsByTaskId(@PathVariable Long taskId){
+    public ResponseEntity<List<Attachment>> getAllAttachmentsByTaskId(@PathVariable Long taskId) {
         return ResponseEntity.ok(repository.getAllAttachmentsByTaskId(taskId));
     }
 }
